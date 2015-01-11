@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- A 'parent' preference, which enables/disables child preferences (below)
+         when checked/unchecked. -->
+    <CheckBoxPreference
+        android:key="network_wifi"
+        android:title="@string/pref_title_wifi"
+        android:defaultValue="false" />
+
+    <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+    <CheckBoxPreference
+        android:key="network_mobile"
+        android:title="@string/pref_title_moible"
+        android:defaultValue="false" />
+
+</PreferenceScreen>

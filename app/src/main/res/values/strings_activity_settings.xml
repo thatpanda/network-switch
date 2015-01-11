@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Settings for Network -->
+    <string name="pref_title_wifi">WiFi</string>
+    <string name="pref_title_moible">Mobile Data</string>
+
+</resources>
