@@ -1,14 +1,12 @@
 package com.notfaqs.network_switch;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.TwoStatePreference;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -21,20 +19,15 @@ public class SettingsActivity extends PreferenceActivity {
         initialize();
     }
 
+    // setMobileDataEnabled is not available on Android 5.0
     private void enableMobile(boolean enabled) {
         Object conMgr = getSystemService(CONNECTIVITY_SERVICE);
         try {
             Class c = Class.forName(conMgr.getClass().getName());
-            Field f = c.getDeclaredField("mService");
-            f.setAccessible(true);
-            conMgr = f.get(conMgr);
-            c = Class.forName(conMgr.getClass().getName());
             Method m = c.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
             m.setAccessible(true);
             m.invoke(conMgr, enabled);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -79,7 +72,7 @@ public class SettingsActivity extends PreferenceActivity {
     private boolean isMobileEnabled() {
         Object conMgr = getSystemService(CONNECTIVITY_SERVICE);
         try {
-            final Class<?> c = Class.forName(conMgr.getClass().getName());
+            final Class c = Class.forName(conMgr.getClass().getName());
             final Method m = c.getDeclaredMethod("getMobileDataEnabled");
             m.setAccessible(true);
             return (Boolean) m.invoke(conMgr);
