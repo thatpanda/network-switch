@@ -89,7 +89,13 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private boolean isWifiEnabled() {
-        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        return conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isAvailable();
+        WifiManager wm = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        switch(wm.getWifiState()) {
+            case WifiManager.WIFI_STATE_ENABLED:
+            case WifiManager.WIFI_STATE_ENABLING:
+                return true;
+            default:
+                return false;
+        }
     }
 }
